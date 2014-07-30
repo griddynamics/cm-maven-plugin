@@ -29,9 +29,9 @@
                 <!--the extension used by Maven in the repository -->
                 <extension>zip</extension>
                 <!--the type used when specifying dependencies etc. -->
-                <type>atg-module</type>
+                <type>config</type>
                 <!--the packaging used when declaring an implementation of the packaging -->
-                <packaging>atg-module</packaging>
+                <packaging>config</packaging>
             </configuration>
         </component>
 
