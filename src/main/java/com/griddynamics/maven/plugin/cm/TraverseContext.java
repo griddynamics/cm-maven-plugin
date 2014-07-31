@@ -60,7 +60,7 @@ class TraverseContext {
     public List<File> getDirectories() {
         if (directories == null) {
             final ContextIterator contextIterator = new ContextIterator(this);
-            return Lists.reverse(Lists.newArrayList(new Iterator<File>() {
+            directories = Lists.reverse(Lists.newArrayList(new Iterator<File>() {
                 @Override
                 public boolean hasNext() {
                     return contextIterator.hasNext();
