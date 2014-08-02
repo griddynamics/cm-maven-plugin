@@ -1,7 +1,12 @@
 # Maven plugin for configuration management
 
 This plugin makes configuration bundles for an application. So the same
-executable code can be configured to run in different environments.
+executable code can be configured to run in different environments. See below:
+
+ - [General information](#user-content-general-information)
+ - [Goals](#user-content-goals)
+ - [Lifecycles](#user-content-lifecycles)
+
 
 ## General information
 
@@ -108,7 +113,6 @@ Default:
 
 This is the list of algorithms to use for merging directories. The first
 algorithm from this list which allows to merge two files will be used.
-
 Each algorithm may be provided with additional properties which allow
 to refine its behavior. E.g. provide exclude list for files which should not
 be merged using specific algorithm.
