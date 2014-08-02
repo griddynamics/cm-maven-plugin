@@ -43,7 +43,7 @@ Name                | Description
 **type**            | Specifies the type of archive in output.<br>Default: `zip`
 **layers**          | Specifies configuration layers.<br>See [below](#user-content-layers) for details.
 **treeAlgorithms**  | This is the list of algorithms to use for merging directories. The first algorithm from this list which allows to merge two files will be used.<br>See [below](#user-content-treealgorithms) for details.
-**fileAlgorithms**  | This is the list of algorithms to use for merging files. The first algorithm from this list allows which to merge two files will be used.<br>See [below](#user-content-fileflgorithms) for details.
+**fileAlgorithms**  | This is the list of algorithms to use for merging files. The first algorithm from this list allows which to merge two files will be used.<br>See [below](#user-content-filealgorithms) for details.
 
 #### Parameters Details
 
@@ -181,7 +181,7 @@ This merge algorithm appends one lower level file to top-level one.
 
 ## Lifecycles
 
-Plugin has only one lifecycle which is described in the following section.
+Plugin has one lifecycle which is described in the following section.
 
 ### configuration packaging
 
