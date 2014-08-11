@@ -19,7 +19,7 @@
 
     <groupId>com.griddynamics.maven.plugins</groupId>
     <artifactId>cm-maven-plugin</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>maven-plugin</packaging>
 
     <name>cm-maven-plugin</name>
@@ -44,7 +44,7 @@
     <scm>
         <connection>scm:git:https://github.com/griddynamics/cm-maven-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/griddynamics/cm-maven-plugin.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>cm-maven-plugin-1.0.0</tag>
         <url>https://github.com/griddynamics/cm-maven-plugin</url>
     </scm>
     <distributionManagement>
