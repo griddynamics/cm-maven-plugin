@@ -22,6 +22,10 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
+    <name>cm-maven-plugin</name>
+    <description>Maven plugin for configuration management</description>
+    <url>https://github.com/griddynamics/cm-maven-plugin</url>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -32,6 +36,24 @@
         <name>Grid Dynamics International, Inc.</name>
         <url>http://www.griddynamics.com</url>
     </organization>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/griddynamics/cm-maven-plugin/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:https://github.com/griddynamics/cm-maven-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/griddynamics/cm-maven-plugin.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/griddynamics/cm-maven-plugin</url>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>gd-cd-releases</id>
+            <name>Grid Dynamics repository for CD projects</name>
+            <url>https://nexus.griddynamics.net/nexus/content/repositories/cd-releases</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
