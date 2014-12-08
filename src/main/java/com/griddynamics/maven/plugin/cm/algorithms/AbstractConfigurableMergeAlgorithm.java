@@ -24,48 +24,41 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractConfigurableMergeAlgorithm<T extends MergeContext> implements MergeAlgorithm<T> {
 
+    private static final String UNIVERSAL_SEPARATOR = "/";
+
     private static final String PROP_INCLUDES = "includes";
 
     private static final String PROP_EXCLUDES = "excludes";
 
-    private final Set<Pattern> includes = new HashSet<>();
+    private Pattern includes = null;
 
-    private final Set<Pattern> excludes = new HashSet<>();
+    private Pattern excludes = null;
 
     public final void setProperties(Properties properties) {
-        includes.addAll(calculateRegexList(properties, PROP_INCLUDES));
-        excludes.addAll(calculateRegexList(properties, PROP_EXCLUDES));
+        includes = calculateRegexList(properties, PROP_INCLUDES);
+        excludes = calculateRegexList(properties, PROP_EXCLUDES);
     }
 
-    private List<Pattern> calculateRegexList(Properties properties, String propertyName) {
+    private Pattern calculateRegexList(Properties properties, String propertyName) {
         if (properties == null) {
-            return Collections.emptyList();
+            return null;
         }
-        String patternsString = (String) properties.get(propertyName);
-        if (patternsString != null) {
-            List<Pattern> patterns = new ArrayList<>();
-            for (String patternString : patternsString.split(File.pathSeparator)) {
-                Pattern pattern = Pattern.compile(patternString);
-                patterns.add(pattern);
-            }
-            return patterns;
+        String patternString = (String) properties.get(propertyName);
+        if (patternString != null) {
+            return Pattern.compile(patternString.replace(UNIVERSAL_SEPARATOR, File.separator));
         } else {
-            return Collections.emptyList();
+            return null;
         }
     }
 
     protected final boolean checkPatterns(String fileName, String relativePath) {
-        for (Pattern include : includes) {
-            if (include.matcher(fileName).matches() || include.matcher(relativePath).matches()) {
-                return true;
-            }
+        if (includes != null && (includes.matcher(fileName).matches() || includes.matcher(relativePath).matches())) {
+            return true;
         }
-        for (Pattern exclude : excludes) {
-            if (exclude.matcher(fileName).matches() || exclude.matcher(relativePath).matches()) {
-                return false;
-            }
+        if (excludes != null && (excludes.matcher(fileName).matches() || excludes.matcher(relativePath).matches())) {
+            return false;
         }
-        return includes.isEmpty() || !excludes.isEmpty();
+        return includes == null || excludes != null;
     }
 
     protected abstract boolean canMerge(File source, File target);
