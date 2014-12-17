@@ -23,4 +23,8 @@ public class MergeException extends MojoExecutionException {
         super(message);
     }
 
+    public MergeException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

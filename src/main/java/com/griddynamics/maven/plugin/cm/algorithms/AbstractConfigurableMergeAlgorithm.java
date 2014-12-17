@@ -37,6 +37,7 @@ public abstract class AbstractConfigurableMergeAlgorithm<T extends MergeContext>
     public final void setProperties(Properties properties) {
         includes = calculateRegexList(properties, PROP_INCLUDES);
         excludes = calculateRegexList(properties, PROP_EXCLUDES);
+        configure(properties);
     }
 
     private Pattern calculateRegexList(Properties properties, String propertyName) {
@@ -62,5 +63,7 @@ public abstract class AbstractConfigurableMergeAlgorithm<T extends MergeContext>
     }
 
     protected abstract boolean canMerge(File source, File target);
+
+    protected void configure(Properties properties) { }
 
 }
