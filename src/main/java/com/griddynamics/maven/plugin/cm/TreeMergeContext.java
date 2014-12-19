@@ -29,8 +29,13 @@ public class TreeMergeContext extends MergeContext {
 
     private final String dirName;
 
-    public TreeMergeContext(File sourceBaseDir, File targetBaseDir, List<FileMergeAlgorithm> fileMergeAlgorithms, List<TreeMergeAlgorithm> treeMergeAlgorithms, Log log) {
-        super(sourceBaseDir, targetBaseDir, fileMergeAlgorithms, treeMergeAlgorithms, log);
+    public TreeMergeContext(
+            File sourceBaseDir, File targetBaseDir,
+            List<TreeMergeAlgorithm> treeMergeAlgorithms,
+            List<FileMergeAlgorithm> fileMergeAlgorithms,
+            List<DataMergeAlgorithm> dataMergeAlgorithms,
+            List<DataProcessor> dataProcessors, Log log) {
+        super(sourceBaseDir, targetBaseDir, treeMergeAlgorithms, fileMergeAlgorithms, dataMergeAlgorithms, dataProcessors, log);
         this.sourceDir = sourceBaseDir;
         this.targetDir = targetBaseDir;
         this.dirName = ".";

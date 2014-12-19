@@ -1,0 +1,119 @@
+Documentation
+
+* Introduction
+
+  There are the following key terms which are required for understanding before using this plugin:
+
+  * <<Configuration layer>> -- implementation of inheritance.
+
+    Configuration is separated onto several layers. Higher level depict more generic configuration, lower level -- more
+    specific.
+
+  * <<Merge algorithm>> -- a tool to build final configuration from layered structure.
+
+    There are plenty of built in merge algorithms. But all of them are split onto the following three types
+
+    * <<Tree merge algorithms>> are standing first in the row.
+
+      These algorithms are used to cope with directories hierarchy, decide what to do in different cases.
+
+    * <<File merge algorithms>> are getting involved when tree merge algorithms meet files.
+
+      These ones decide about keeping, overwriting and even merging data in files.
+
+    * <<Data merge algorithms>> are the ones which rule when special agility is required.
+
+      These ones give ability to manipulate and merge data inside files. But keep in mind, that data for such algorithms
+      needs to be represented as tree structure.
+
+  The following sections describe configuration layers and merge algorithms in details.
+
+* Configuration layers
+
+  There may be as much configuration layers as required by specific project. Configuration layers are defined using
+  plugin configuration in the following way:
+
+---
+<project>
+  [...]
+  <build>
+    [...]
+    <plugins>
+      [...]
+      <plugin>
+        <artifactId>cm-maven-plugin</artifactId>
+        <configuration>
+          [...]
+          <layers>
+            <layer>
+              <name>application</name>
+            </layer>
+            <layer>
+              <name>environment</name>
+            </layer>
+            <layer>
+              <name>instance</name>
+            </layer>
+          </layers>
+          [...]
+        </configuration>
+        [...]
+</project>
+---
+
+  Such configuration layer structure requires the following project structure:
+
+---
+├─application
+│ ├─config
+│ │ └─...
+│ └─environment
+│   ├─qa
+│   ├─uat
+│   └─prod
+│     └─config
+│       └─instance
+│         ├─qa
+│         └─uat
+│           └─config
+│             └...
+└─pom.xml
+---
+
+  Every layer stays optional. However, creating directory of the desired layer will give plugin a signal, that such
+  layer exists. By default plugin creates only leafs of configuration tree which may be tuned using layers configuration
+  options:
+
+---
+[...]
+<layer>
+  <name>environment</name>
+  <includeNode>true</includeNode>
+  <includeLeaf>false</includeLeaf>
+</layer>
+[...]
+---
+
+  * <<includeNode>> set to true tells plugin to build configuration artifact even if there is more specific layer.
+
+  * <<includeLeaf>> set to false tells plugin not to build configuration artifact if there are no more specific layers.
+
+  Of course these two options may be used separately. By default <<includeNode>>=false, <<includeLeaf>>=true which makes
+  plugin to build only configuration tree leafs.
+
+  The next section describes in details how configuration is merged.
+
+* Merge algorithms
+
+  Plugin traverses project from highest (<application> in example above) to lowest (<instance> in example above) level.
+  Data by default is located in <config> directory which may be altered by <configDir> property in plugin configuration.
+
+  Plugin starts it work with tree merge algorithms. The main tree algorithm is <RecursiveTreeMergeAlgorithm>. It walks
+  through tree hierarchy and merges directory structure. Since plugin starts from highest level, recursive algorithm
+  just recreates top level directory structure in configuration target directory.
+  If it meets a file, then file merge algorithm is looked up and applied.
+
+  There is also special file merge algorithm <DataFileMergeAlgorithm> which allows to perform merge on data level inside
+  files. This algorithms involves processors which are supposed to transform data in files into DOM structure. DOM
+  structures are merged using data merge algorithm and then transformed back into files.
+

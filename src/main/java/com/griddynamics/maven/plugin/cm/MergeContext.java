@@ -31,9 +31,19 @@ public abstract class MergeContext {
 
     private final List<TreeMergeAlgorithm> treeMergeAlgorithms;
 
+    private final List<DataMergeAlgorithm> dataMergeAlgorithms;
+
+    private final List<DataProcessor> dataProcessors;
+
     private final Log log;
 
-    protected MergeContext(File sourceBaseDir, File targetBaseDir, List<FileMergeAlgorithm> fileMergeAlgorithms, List<TreeMergeAlgorithm> treeMergeAlgorithms, Log log) {
+    protected MergeContext(
+            File sourceBaseDir, File targetBaseDir,
+            List<TreeMergeAlgorithm> treeMergeAlgorithms,
+            List<FileMergeAlgorithm> fileMergeAlgorithms,
+            List<DataMergeAlgorithm> dataMergeAlgorithms,
+            List<DataProcessor> dataProcessors,
+            Log log) {
         if (!sourceBaseDir.isDirectory()) {
             throw new IllegalArgumentException("Provided source base directory '" + sourceBaseDir + "' is not actual directory");
         }
@@ -42,13 +52,15 @@ public abstract class MergeContext {
         }
         this.sourceBaseDir = sourceBaseDir;
         this.targetBaseDir = targetBaseDir;
-        this.fileMergeAlgorithms = fileMergeAlgorithms;
         this.treeMergeAlgorithms = treeMergeAlgorithms;
+        this.fileMergeAlgorithms = fileMergeAlgorithms;
+        this.dataMergeAlgorithms = dataMergeAlgorithms;
+        this.dataProcessors = dataProcessors;
         this.log = log;
     }
 
     public MergeContext(MergeContext parent) {
-        this(parent.sourceBaseDir, parent.targetBaseDir, parent.fileMergeAlgorithms, parent.treeMergeAlgorithms, parent.log);
+        this(parent.sourceBaseDir, parent.targetBaseDir, parent.treeMergeAlgorithms, parent.fileMergeAlgorithms, parent.dataMergeAlgorithms, parent.dataProcessors, parent.log);
     }
 
     public final File getSourceBaseDir() {
@@ -65,6 +77,14 @@ public abstract class MergeContext {
 
     public List<TreeMergeAlgorithm> getTreeMergeAlgorithms() {
         return treeMergeAlgorithms;
+    }
+
+    public List<DataMergeAlgorithm> getDataMergeAlgorithms() {
+        return dataMergeAlgorithms;
+    }
+
+    public List<DataProcessor> getDataProcessors() {
+        return dataProcessors;
     }
 
     public Log getLog() {

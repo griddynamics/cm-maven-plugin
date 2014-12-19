@@ -54,6 +54,16 @@ public class MergeMojo extends AbstractMojo {
             new LayerModel("instances", false, true)
         };
 
+    @Parameter
+    private DataProcessorModel[] processors = {
+
+        };
+
+    @Parameter
+    private MergeAlgorithmModel[] dataAlgorithms = {
+
+        };
+
     /**
      * Ordered list of file merge algorithms to use.<br/>
      * First one which supports files merge will be used. If non of specified algorithm supports merge, the merge will
@@ -68,6 +78,10 @@ public class MergeMojo extends AbstractMojo {
     private MergeAlgorithmModel[] treeAlgorithms = {
             new MergeAlgorithmModel(RecursiveTreeMergeAlgorithm.class.getName(), null)
         };
+
+    private List<DataProcessor> dataProcessors;
+
+    private List<DataMergeAlgorithm> dataMergeAlgorithms;
 
     private List<FileMergeAlgorithm> fileMergeAlgorithms;
 
@@ -93,6 +107,7 @@ public class MergeMojo extends AbstractMojo {
     }
 
     private void prepare() throws MojoFailureException {
+        instantiateProcessors();
         instantiateMergeAlgorithms();
         validateProvidedConfigurationLayers();
     }
@@ -105,7 +120,20 @@ public class MergeMojo extends AbstractMojo {
         }
     }
 
+    private void instantiateProcessors() throws MojoFailureException {
+        dataProcessors = new ArrayList<>();
+        for (DataProcessorModel dataProcessorModel : processors) {
+            try {
+                DataProcessor dataProcessor = (DataProcessor) Class.forName(dataProcessorModel.getImplementation()).newInstance();
+                dataProcessors.add(dataProcessor);
+            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                throw new MojoFailureException("Provided data processor could not be instantiated", e);
+            }
+        }
+    }
+
     private void instantiateMergeAlgorithms() throws MojoFailureException {
+        dataMergeAlgorithms = instantiateGenericMergeAlgorithms(dataAlgorithms);
         fileMergeAlgorithms = instantiateGenericMergeAlgorithms(fileAlgorithms);
         treeMergeAlgorithms = instantiateGenericMergeAlgorithms(treeAlgorithms);
     }
@@ -215,7 +243,11 @@ public class MergeMojo extends AbstractMojo {
     private void mergeTrees(List<File> sourceDirectories, File targetBaseDir) throws IOException, MergeException {
         for (File sourceBaseDir : sourceDirectories) {
             if (sourceBaseDir.isDirectory()) {
-                new TreeMergeContext(sourceBaseDir, targetBaseDir, fileMergeAlgorithms, treeMergeAlgorithms, getLog()).merge();
+                new TreeMergeContext(
+                        sourceBaseDir, targetBaseDir,
+                        treeMergeAlgorithms, fileMergeAlgorithms, dataMergeAlgorithms, dataProcessors,
+                        getLog()
+                    ).merge();
             }
         }
     }

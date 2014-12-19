@@ -1,0 +1,21 @@
+---
+cm-maven-plugin
+---
+
+  This plugin is intended to help managing complex heterogeneous configurations. Nowadays there are a lot of large
+  software projects which are supposed to work on complex environments. A lot of commercial development includes numbers
+  numbers of such environments in clouds for different purposes. Each of these environments need to be configured and
+  the configuration process may be not so easy as it may seem from the first glance.
+
+  Each of such environments may contain numbers of different applications with different roles. Each of those
+  applications may require its own configuration. The more complex environment is, the more complex configuration
+  management appears to be. But there is no generic approach of managing such configuration and people which maintain
+  environments need to spend considerable effort to keep all up to date.
+
+  Often configuration managers invent systems for managing configuration. These systems are different and, as it already
+  was told, there is no generic approach to handle configuration management.
+
+  So this plugin provides several generic concepts, which do not insist on the only approach. Instead, these concepts
+  give great agility to organize everything in the way one would like. Anyway, this is just Maven plugin and it is
+  already has the limited appliance area.
+

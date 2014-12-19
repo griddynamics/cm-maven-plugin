@@ -24,45 +24,12 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractConfigurableMergeAlgorithm<T extends MergeContext> implements MergeAlgorithm<T> {
 
-    private static final String UNIVERSAL_SEPARATOR = "/";
-
-    private static final String PROP_INCLUDES = "includes";
-
-    private static final String PROP_EXCLUDES = "excludes";
-
-    private Pattern includes = null;
-
-    private Pattern excludes = null;
-
     public final void setProperties(Properties properties) {
-        includes = calculateRegexList(properties, PROP_INCLUDES);
-        excludes = calculateRegexList(properties, PROP_EXCLUDES);
+        if (properties == null) {
+            properties = new Properties();
+        }
         configure(properties);
     }
-
-    private Pattern calculateRegexList(Properties properties, String propertyName) {
-        if (properties == null) {
-            return null;
-        }
-        String patternString = (String) properties.get(propertyName);
-        if (patternString != null) {
-            return Pattern.compile(patternString.replace(UNIVERSAL_SEPARATOR, File.separator));
-        } else {
-            return null;
-        }
-    }
-
-    protected final boolean checkPatterns(String fileName, String relativePath) {
-        if (includes != null && (includes.matcher(fileName).matches() || includes.matcher(relativePath).matches())) {
-            return true;
-        }
-        if (excludes != null && (excludes.matcher(fileName).matches() || excludes.matcher(relativePath).matches())) {
-            return false;
-        }
-        return includes == null || excludes != null;
-    }
-
-    protected abstract boolean canMerge(File source, File target);
 
     protected void configure(Properties properties) { }
 
