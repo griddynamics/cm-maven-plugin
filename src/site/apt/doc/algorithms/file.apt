@@ -1,0 +1,85 @@
+File merge algorithms
+
+* CopyFileMergeAlgorithm
+
+** Work conditions
+
+  Each of the following statements must be true:
+
+  * Source file exists
+
+  * Target file does not exist
+
+** Description
+
+  Copies source file to target location.
+
+* DataFileMergeAlgorithm
+
+** Work conditions
+
+  Each of the following statements must be true:
+
+  * Source file exists
+
+  * Target file exists
+
+  * There is processor for file
+
+  * Source file conforms regular expression filters
+
+** Description
+
+  Uses data merge algorithms to merge file.
+
+* JoinFileMergeAlgorithm
+
+** Work condition
+
+  Each of the following statements must be true:
+
+  * Source file exists
+
+  * Target file exists
+
+  * Source file conforms regular expression filters
+
+** Action description
+
+  Appends contents of source file to target file
+
+* OverwriteFileMergeAlgorithm
+
+** Work condition
+
+  Each of the following statements must be true:
+
+  * Source file exists
+
+  * Target file exists
+
+  * Source file conforms regular expression filters
+
+** Description
+
+  Replaces target file with source file.
+
+* PropertiesFileMergeAlgorithm
+
+** Work condition
+
+  Each of the following statements must be true:
+
+  * Source file exists
+
+  * Target file exists
+
+  * Source file conforms regular expression filters
+
+** Description
+
+  Merges source and target Java properties files:
+
+  [[1]] Adds all properties missing in target file
+
+  [[2]] Overrides values of properties in target file with corresponding properties from source file

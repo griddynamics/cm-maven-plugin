@@ -1,21 +1,31 @@
----
 cm-maven-plugin
----
 
-  This plugin is intended to help managing complex heterogeneous configurations. Nowadays there are a lot of large
-  software projects which are supposed to work on complex environments. A lot of commercial development includes numbers
-  numbers of such environments in clouds for different purposes. Each of these environments need to be configured and
-  the configuration process may be not so easy as it may seem from the first glance.
+  Goal of this plugin is to help managing complex heterogeneous configurations.
+  It provides several generic concepts, which do not insist on the concrete approach.
+  Instead, these concepts give grant enough agility to organize everything in the way one would like.
+  Anyway, this is just Maven plugin and it is already has the limited appliance area.
 
-  Each of such environments may contain numbers of different applications with different roles. Each of those
-  applications may require its own configuration. The more complex environment is, the more complex configuration
-  management appears to be. But there is no generic approach of managing such configuration and people which maintain
-  environments need to spend considerable effort to keep all up to date.
+* Key terms
 
-  Often configuration managers invent systems for managing configuration. These systems are different and, as it already
-  was told, there is no generic approach to handle configuration management.
+  There are the following key terms which are required for understanding before using this plugin:
 
-  So this plugin provides several generic concepts, which do not insist on the only approach. Instead, these concepts
-  give great agility to organize everything in the way one would like. Anyway, this is just Maven plugin and it is
-  already has the limited appliance area.
+  * <<Configuration layer>> -- implementation of inheritance.
 
+  Configuration is separated onto several layers. Higher level depict more generic configuration, lower level -- more
+  specific.
+
+  * <<Merge algorithm>> -- a tool to build final configuration from layered structure.
+
+  There are plenty of built in merge algorithms. But all of them are split onto the following three types
+
+    * <<Tree merge algorithms>> are standing first in the row.
+
+    These algorithms are used to cope with directories hierarchy, decide what to do in different cases.
+
+    * <<File merge algorithms>> are getting involved when tree merge algorithms meet files.
+
+    These ones decide about keeping, overwriting and even merging data in files.
+
+    * <<Data merge algorithms>> are the ones which rule when special agility is required.
+
+    These ones give ability to manipulate and merge data inside files.

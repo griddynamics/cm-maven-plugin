@@ -34,18 +34,36 @@ import org.codehaus.plexus.util.StringUtils;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Merges configuration from different configuration layers according to layers and merge algorithms configuration.
+ *
+ * Plugin builds hierarchical configuration into several artifacts. Number of artifacts depends on configuration and
+ * project structure.
+ */
 @Mojo(name = "merge", defaultPhase = LifecyclePhase.COMPILE)
 public class MergeMojo extends AbstractMojo {
 
+    /**
+     * Directory in which plugin will perform all its build operations and to which it will put generated artifacts.
+     */
     @Parameter(defaultValue = "${project.build.directory}")
     private File buildDir;
 
+    /**
+     * Name of directory under which the configuration layer data is located.
+     */
     @Parameter(defaultValue = "config")
     private String configDir;
 
+    /**
+     * Artifacts archive type.
+     */
     @Parameter(defaultValue = "zip")
     private String type;
 
+    /**
+     * Definition of configuration layers.
+     */
     @Parameter
     private LayerModel[] layers = new LayerModel[] {
             new LayerModel("application", false, false),
@@ -54,11 +72,19 @@ public class MergeMojo extends AbstractMojo {
             new LayerModel("instances", false, true)
         };
 
+    /**
+     * Ordered list of data processors available to manage different types of files.<br/>
+     */
     @Parameter
     private DataProcessorModel[] processors = {
 
         };
 
+    /**
+     * Ordered list of data merge algorithms.<br/>
+     *
+     * The first applicable algorithm from list will be used to merge data in files.
+     */
     @Parameter
     private MergeAlgorithmModel[] dataAlgorithms = {
 
@@ -74,6 +100,11 @@ public class MergeMojo extends AbstractMojo {
             new MergeAlgorithmModel(PropertiesFileMergeAlgorithm.class.getName(), null)
         };
 
+    /**
+     * Ordered list of tree merge algorithms to use.<br/>
+     *
+     * First one which is able to merge given directories will be used.
+     */
     @Parameter
     private MergeAlgorithmModel[] treeAlgorithms = {
             new MergeAlgorithmModel(RecursiveTreeMergeAlgorithm.class.getName(), null)

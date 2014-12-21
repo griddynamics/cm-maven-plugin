@@ -34,19 +34,12 @@ public class RecursiveTreeMergeAlgorithm
 
     @Override
     public boolean canMerge(File source, File target) {
-        return true;
+        return source.isDirectory() && target.isDirectory();
     }
 
     @Override
     public void merge(TreeMergeContext context) throws IOException, MergeException {
         File source = context.getSourceDir();
-        File target = context.getTargetDir();
-
-        if (!target.isDirectory()) {
-            if (!target.mkdir()) {
-                throw new IOException("Unable to create directory: " + target);
-            }
-        }
 
         File[] files = source.listFiles();
 

@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="Maven" xmlns="http://maven.apache.org/xsd/decoration-1.3.0.xsd">
-    <bannerLeft>
-        <name>Maven</name>
-        <src>http://maven.apache.org/images/apache-maven-project.png</src>
-        <href>http://maven.apache.org/</href>
-    </bannerLeft>
-    <bannerRight>
-        <src>http://maven.apache.org/images/maven-small.gif</src>
-    </bannerRight>
-    <body>
-        <links>
-            <item name="Apache" href="http://www.apache.org/" />
-            <item name="Maven 1.x" href="http://maven.apache.org/maven-1.x/"/>
-            <item name="Maven 2" href="http://maven.apache.org/"/>
-        </links>
+<project name="cm-maven-plugin"
+         xmlns="http://maven.apache.org/DECORATION/1.3.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
 
-        <menu name="Maven 3.0">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.3.1</version>
+    </skin>
+
+    <bannerLeft>
+        <name>Grid Dynamics</name>
+        <src>http://www.griddynamics.com/wp-content/themes/grid/images/logo.png</src>
+        <href>http://www.griddynamics.com/</href>
+    </bannerLeft>
+    <body>
+        <menu name="Overview">
             <item name="Introduction" href="index.html"/>
-            <item name="Documentation" href="doc.html"/>
-            <item name="Download" href="download.html"/>
-            <item name="Release Notes" href="release-notes.html" />
-            <item name="General Information" href="about.html"/>
-            <item name="Road Map" href="roadmap.html" />
+            <item name="Goals" href="plugin-info.html"/>
+            <item name="Usage" href="usage.html" collapse="true"/>
+        </menu>
+
+        <menu name="Reference">
+            <item name="Layers" href="doc/layers.html"/>
+            <item name="Algorithms" href="doc/algorithms/index.html" collapse="true">
+                <item name="Tree" href="doc/algorithms/tree.html"/>
+                <item name="File" href="doc/algorithms/file.html"/>
+                <item name="Data" href="doc/algorithms/data.html">
+                    <item name="Processors" href="doc/algorithms/data-processors.html"/>
+                </item>
+            </item>
+            <item name="Best practices" href="doc/best-practices.html"/>
+            <item name="API" href="doc/api.html"/>
         </menu>
 
     </body>
+
 </project>

@@ -26,7 +26,7 @@ public class ReplaceTreeMergeAlgorithm extends AbstractConfigurableTreeMergeAlgo
 
     @Override
     protected boolean canMerge(File source, File target) {
-        return source.exists() && target.exists();
+        return source.isDirectory() && target.isDirectory();
     }
 
     @Override

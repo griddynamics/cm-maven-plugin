@@ -1,0 +1,49 @@
+Data merge algorithms
+
+* CopyDataMergeAlgorithm
+
+** Work condition
+
+  Each of the following statement must be true:
+
+  * Source node exists
+
+  * Target node does not exist
+
+  * Current location conforms XPath filters
+
+** Description
+
+  Copies source node to target document attaching it to the place where it is missing.
+
+* OverrideDataMergeAlgorithm
+
+** Work conditions
+
+  Each of the following statement must be true:
+
+  * Source node exists
+
+  * Target node exists
+
+  * Current location conforms XPath filters
+
+** Description
+
+  Replaces target node with source node.
+
+* RecursiveDataMergeAlgorithm
+
+** Work condition
+
+  Each of the following statement must be true:
+
+  * Source node exists
+
+  * Target node exists
+
+  * Current location conforms XPath filters
+
+** Description
+
+  Just walks through source and target documents as long as their structure is identical.

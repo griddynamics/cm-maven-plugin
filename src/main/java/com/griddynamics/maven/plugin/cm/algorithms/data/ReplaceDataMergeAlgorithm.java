@@ -6,7 +6,7 @@ import org.w3c.dom.Node;
 
 import java.io.IOException;
 
-public class OverrideDataMergeAlgorithm extends AbstractConfigurableDataMergeAlgorithm {
+public class ReplaceDataMergeAlgorithm extends AbstractConfigurableDataMergeAlgorithm {
 
     @Override
     public boolean canMerge(Node sourceNode, Node targetNode) {

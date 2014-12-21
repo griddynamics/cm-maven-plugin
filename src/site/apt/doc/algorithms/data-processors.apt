@@ -1,0 +1,41 @@
+Data processors
+
+* CNF data processor
+
+  This data processor is assumed to work with MySQL configuration files.
+  The following CNF file
+
+---
+[Section1]
+property1="value a"
+property2=123
+parameter
+property3=value_b
+
+[Section2]
+property1="value c"
+property4="value d"
+---
+
+  Will be translated into the following DOM document:
+
+---
+<file_name.cnf>
+  <Section1>
+    <property1>"value a"</property1>
+    <property2>123</property2>
+    <parameter/>
+    <property3>value_b</property3>
+  </Section1>
+  <Section2>
+    <property1>"value c"</property1>
+    <property4>"value d"</property4
+  </Section2>
+</file_name.cnf>
+---
+
+  Where <file_name.cnf> is the name of the original file (just for convenience to be able to give XPath by file name).
+
+* XML data processor
+
+  This is the most straight-forward data processor. It just reads XML document into DOM structure.
