@@ -1,0 +1,87 @@
+API
+
+* Extending plugin
+
+  To extend plugin generally you will just want to add additional merge algorithms.
+
+** Writing merge algorithm
+
+  The following example shows how you can implement simple tree merge algorithm.
+
+---
+import com.griddynamics.maven.plugin.cm.TreeMergeAlgorithm;
+
+public class MyTreeMergeAlgorithm
+    implements TreeMergeAlgorithm {
+
+    private String directoryName = "my_directory";
+
+    // this method determines whether this algorithm will be applied to given file
+    // or not.
+    public boolean canMerge(TreeMergeContext mergeContext) {
+        return !mergeContext.getTargetDir().exists() &&
+            mergeContext.getSourceDir().getName().equals(directoryName);
+    }
+
+    // this method receives all properties from algorithm configuration
+    public void setProperties(Properties properties) {
+        String myDirectoryName = properties.get("myDirectoryName");
+        if (myDirectoryName != null) {
+            directoryName = myDirectoryName;
+        }
+    }
+
+    // this method performs action if canMerge returned true
+    public void merge(T mergeContext) throws IOException, MergeException {
+        FileUtils.copyDirectory(mergeContext.getSourceDir(), mergeContext.getTargetDir());
+    }
+
+
+}
+---
+
+** Configurable merge algorithm
+
+  For additional convenience there are special abstract configurable implementations for all three types of merge
+  algorithms:
+
+  * com.griddynamics.maven.plugin.cm.algorithms.tree.AbstractConfigurableTreeMergeAlgorithm
+
+  * com.griddynamics.maven.plugin.cm.algorithms.file.AbstractConfigurableFileMergeAlgorithm
+
+  * com.griddynamics.maven.plugin.cm.algorithms.data.AbstractConfigurableDataMergeAlgorithm
+
+  []
+
+  These algorithms has include and exclude logic built in so you may just skip canMerge implementation in case if you
+  just want to filter by some pattern.
+
+  Please remember that for files and directories filters are regular expressions, but for data filters are XPath
+  expressions which match the node.
+
+  The following example illustrates configurable data merge algorithm:
+
+---
+import com.griddynamics.maven.plugin.cm.DataMergeContext;
+import com.griddynamics.maven.plugin.cm.MergeException;
+import org.w3c.dom.Node;
+
+import java.io.IOException;
+
+public class CopyDataMergeAlgorithm extends AbstractConfigurableDataMergeAlgorithm {
+
+    @Override
+    public boolean canMerge(Node sourceNode, Node targetNode) {
+        return sourceNode != null && targetNode == null;
+    }
+
+    @Override
+    public void merge(DataMergeContext mergeContext) throws IOException, MergeException {
+        Node node = mergeContext.getSourceNode().cloneNode(true);
+        mergeContext.getTargetDocument().adoptNode(node);
+        mergeContext.getParentTargetNode().appendChild(node);
+    }
+}
+---
+
+  All algorithms provided with plugin are configurable.

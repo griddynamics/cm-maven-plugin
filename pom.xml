@@ -37,7 +37,15 @@
         <name>Grid Dynamics International, Inc.</name>
         <url>http://www.griddynamics.com</url>
     </organization>
-
+    <developers>
+        <developer>
+            <name>Alexander Betaev</name>
+            <email>abetaev@griddynamics.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/griddynamics/cm-maven-plugin/issues</url>
@@ -116,17 +124,18 @@
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.4</version>
-                <configuration>
-                    <reportPlugins>
-                        <reportPlugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-plugin-plugin</artifactId>
-                            <version>3.2</version>
-                        </reportPlugin>
-                    </reportPlugins>
-                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.2</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>

@@ -19,20 +19,32 @@
         <menu name="Overview">
             <item name="Introduction" href="index.html"/>
             <item name="Goals" href="plugin-info.html"/>
-            <item name="Usage" href="usage.html" collapse="true"/>
-        </menu>
-
-        <menu name="Reference">
-            <item name="Layers" href="doc/layers.html"/>
-            <item name="Algorithms" href="doc/algorithms/index.html" collapse="true">
-                <item name="Tree" href="doc/algorithms/tree.html"/>
-                <item name="File" href="doc/algorithms/file.html"/>
-                <item name="Data" href="doc/algorithms/data.html">
-                    <item name="Processors" href="doc/algorithms/data-processors.html"/>
+            <item name="Usage" href="usage.html" collapse="true">
+                <item name="Layers" href="usage.html#Configuration_layers"/>
+                <item name="Algorithms" href="usage.html#Merge_algorithms">
+                    <item name="Tree" href="usage/tree.html"/>
+                    <item name="File" href="usage/file.html"/>
+                    <item name="Data" href="usage/data.html"/>
+                    <item name="Processors" href="usage/data-processors.html"/>
                 </item>
             </item>
-            <item name="Best practices" href="doc/best-practices.html"/>
-            <item name="API" href="doc/api.html"/>
+        </menu>
+
+        <menu name="Advanced topics">
+            <item name="Best practices" href="advanced/best-practices.html"/>
+            <item name="API" href="advanced/api.html"/>
+        </menu>
+
+        <menu name="Project documentation">
+            <item name="Project information" href="project-info.html" collapse="true">
+                <item name="Distribution management" href="distribution-management.html"/>
+                <item name="Dependency info" href="dependency-info.html"/>
+                <item name="Source repository" href="source-repository.html"/>
+                <item name="Issue tracking" href="issue-tracking.html"/>
+                <item name="The sTeam" href="team-list.html"/>
+                <item name="License" href="license.html"/>
+                <item name="Summary" href="project-summary.html"/>
+            </item>
         </menu>
 
     </body>

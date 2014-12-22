@@ -32,10 +32,7 @@ Tree merge algorithms
 
   Walks through source directory:
 
-  * If it meets directory which does not exist in target directory, it creates it and proceeds with appropriate
-    directory merge algorithm.
-
-  * If it meets directory which exists in target directory, then it merges it using appropriate algorithm.
+  * If it meets directory, then it merges it using appropriate algorithm.
 
   * If it meets file, then it proceeds to merge it using appropriate file merge algorithm
 
