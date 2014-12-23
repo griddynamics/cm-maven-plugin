@@ -9,7 +9,7 @@ import java.io.IOException;
 public class ReplaceDataMergeAlgorithm extends AbstractConfigurableDataMergeAlgorithm {
 
     @Override
-    public boolean canMerge(Node sourceNode, Node targetNode) {
+    public boolean canMerge(Node sourceNode, Node targetNode, Node parentTargetNode) {
         return sourceNode != null && targetNode != null;
     }
 

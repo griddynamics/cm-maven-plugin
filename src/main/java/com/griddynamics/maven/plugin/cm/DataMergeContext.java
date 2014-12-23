@@ -132,6 +132,9 @@ public final class DataMergeContext extends MergeContext {
     }
 
     public Node getParentTargetNode() {
+        if (parent == null) {
+            return null;
+        }
         return parent.getTargetNode();
     }
 

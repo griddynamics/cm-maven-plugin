@@ -7,14 +7,12 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 
 public class XmlProcessor implements DataProcessor {
 
@@ -28,6 +26,9 @@ public class XmlProcessor implements DataProcessor {
         try {
             documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             transformer = TransformerFactory.newInstance().newTransformer();
+            Properties outputProperties = new Properties();
+            outputProperties.setProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperties(outputProperties);
         } catch (TransformerConfigurationException | ParserConfigurationException e) {
             throw new ExceptionInInitializerError(e);
         }

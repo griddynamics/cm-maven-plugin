@@ -1,5 +1,42 @@
 Data merge algorithms
 
+* AppendDataMergeAlgorithm
+
+** Work condition
+
+  * Source node exists
+
+  * Target parent node exist
+
+  * Current location conforms XPath filters
+
+** Description
+
+  Appends source node to target nodes parent.
+
+  For example in the following two XML files:
+
+---
+<hello>
+  <world/>
+</hello>
+---
+
+---
+<hello>
+  <exclamation/>
+</hello>
+---
+
+  Will be merged into
+
+---
+<hello>
+  <world/>
+  <exclamation/>
+</hello>
+---
+
 * CopyDataMergeAlgorithm
 
 ** Work condition

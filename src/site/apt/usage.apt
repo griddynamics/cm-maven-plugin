@@ -1,12 +1,12 @@
 Usage
 
-  In order to use lifecycle provided in plugin for convenience, just set \<packaging/\> to <configuration> and enable
-  plugin extensions in plugin configuration.
+  In order to use lifecycle provided in plugin for convenience, just set \<packaging/\> to <configuration> and <<enable
+  plugin extensions>> in plugin configuration.
 
 ---
 <project>
   ...
-  <packaging>configuration>
+  <packaging>configuration</packaging>
   ...
   <build>
     <plugins>

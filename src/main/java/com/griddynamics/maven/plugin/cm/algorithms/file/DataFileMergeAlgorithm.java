@@ -13,7 +13,11 @@ public class DataFileMergeAlgorithm extends AbstractConfigurableFileMergeAlgorit
     @Override
     public boolean canMerge(FileMergeContext mergeContext) {
         File source = mergeContext.getSourceFile();
-        if (!source.getName().equals(mergeContext.getTargetFile().getName())) {
+        File target = mergeContext.getTargetFile();
+        if (!target.isFile()) {
+            return false;
+        }
+        if (!source.getName().equals(target.getName())) {
             return false;
         }
         for (DataProcessor dataProcessor : mergeContext.getDataProcessors()) {

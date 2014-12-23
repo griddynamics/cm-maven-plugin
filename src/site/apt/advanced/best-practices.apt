@@ -10,6 +10,10 @@ Best practices
 
   * <<Dynamic>>. Configuration of such environments depend on environment pool manager which has provided this
 
+  []
+
+  There may also be some hybrid types of environments which contain static properties as long as dynamic ones.
+
   You should clearly understand which type(s) of environments are you going to configure.
 
 ** Placeholders
@@ -32,8 +36,8 @@ Best practices
 
   If you are able to cope with configuration running already existing merge algorithms, you should not create new ones.
 
-  For example, Apache HTTPD configuration may be split onto several files, so you won't need to write data processor for
-  Apache HTTP configuration.
+  For example, Apache HTTPD configuration is complex. But it may be split onto several files, so you won't need to write
+  data processor for Apache HTTP configuration, but override required parts using separate files.
 
 * One merge algorithm may be used several times in chain
 
@@ -46,3 +50,11 @@ Best practices
 
   Generally applications have orthogonal scope of roles. This will bring a lot of headache managing such configurations.
   In order to use some common configuration you may setup configuration plugin in parent pom and inherit it.
+
+  For example if you have Tomcat and an application which runs on it, it would generally be the best way to have two
+  configuration projects for your application and for Tomcat.
+  The application's configuration will contain all the information required for application to function on the specific
+  environment (e.g. resources names). Tomcat's configuration in this case will contain information about resources,
+  passwords to connect to database, etc... So you will probably will need to have only one or two configuration for an
+  application (to function in production and in development mode), and several configurations for Tomcat to be able to
+  access resources on different environments.

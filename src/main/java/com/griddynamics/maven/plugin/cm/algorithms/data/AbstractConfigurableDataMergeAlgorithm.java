@@ -29,7 +29,8 @@ public abstract class AbstractConfigurableDataMergeAlgorithm
 
     @Override
     public final boolean canMerge(DataMergeContext mergeContext) {
-        return checkPatterns(mergeContext) && canMerge(mergeContext.getSourceNode(), mergeContext.getTargetNode());
+        return checkPatterns(mergeContext) &&
+                canMerge(mergeContext.getSourceNode(), mergeContext.getTargetNode(), mergeContext.getParentTargetNode());
     }
 
     private boolean checkPatterns(DataMergeContext mergeContext) {
@@ -63,7 +64,7 @@ public abstract class AbstractConfigurableDataMergeAlgorithm
         return false;
     }
 
-    protected boolean canMerge(Node sourceNode, Node targetNode) {
+    protected boolean canMerge(Node sourceNode, Node targetNode, Node parentTargetNode) {
         return true;
     }
 

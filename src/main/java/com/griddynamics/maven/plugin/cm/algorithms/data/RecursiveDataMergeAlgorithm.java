@@ -14,7 +14,7 @@ import java.util.Map;
 public class RecursiveDataMergeAlgorithm extends AbstractConfigurableDataMergeAlgorithm {
 
     @Override
-    public boolean canMerge(Node sourceNode, Node targetNode) {
+    public boolean canMerge(Node sourceNode, Node targetNode, Node parentTargetNode) {
         return sourceNode != null && targetNode != null;
     }
 
@@ -24,7 +24,7 @@ public class RecursiveDataMergeAlgorithm extends AbstractConfigurableDataMergeAl
         Node sourceChild = sourceNode.getFirstChild();
 
         Map<String, Integer> elementCounters = new HashMap<>();
-        do {
+        while (sourceChild != null) {
             if (sourceChild instanceof Element) {
                 Element sourceChildElement = (Element) sourceChild;
                 String name = sourceChildElement.getTagName();
@@ -41,7 +41,8 @@ public class RecursiveDataMergeAlgorithm extends AbstractConfigurableDataMergeAl
             } else if (sourceChild instanceof Text) {
                 new DataMergeContext(mergeContext, (Text) sourceChild);
             }
-        } while ((sourceChild = sourceChild.getNextSibling()) != null);
+            sourceChild = sourceChild.getNextSibling();
+        }
     }
 
 }
