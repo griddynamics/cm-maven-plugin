@@ -14,9 +14,11 @@ executable code can be configured to run in different environments. See below:
 <plugin>
     <groupId>com.griddynamics.maven.plugins</groupId>
     <artifactId>cm-maven-plugin</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.2.0</version>
 </plugin>
 ```
+
+Maven repository for released binaries: https://nexus.griddynamics.net/nexus/content/groups/public
 
 
 ## Goals
