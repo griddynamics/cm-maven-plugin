@@ -1,0 +1,86 @@
+Data merge algorithms
+
+* AppendDataMergeAlgorithm
+
+** Work condition
+
+  * Source node exists
+
+  * Target parent node exist
+
+  * Current location conforms XPath filters
+
+** Description
+
+  Appends source node to target nodes parent.
+
+  For example in the following two XML files:
+
+---
+<hello>
+  <world/>
+</hello>
+---
+
+---
+<hello>
+  <exclamation/>
+</hello>
+---
+
+  Will be merged into
+
+---
+<hello>
+  <world/>
+  <exclamation/>
+</hello>
+---
+
+* CopyDataMergeAlgorithm
+
+** Work condition
+
+  Each of the following statement must be true:
+
+  * Source node exists
+
+  * Target node does not exist
+
+  * Current location conforms XPath filters
+
+** Description
+
+  Copies source node to target document attaching it to the place where it is missing.
+
+* OverrideDataMergeAlgorithm
+
+** Work conditions
+
+  Each of the following statement must be true:
+
+  * Source node exists
+
+  * Target node exists
+
+  * Current location conforms XPath filters
+
+** Description
+
+  Replaces target node with source node.
+
+* RecursiveDataMergeAlgorithm
+
+** Work condition
+
+  Each of the following statement must be true:
+
+  * Source node exists
+
+  * Target node exists
+
+  * Current location conforms XPath filters
+
+** Description
+
+  Just walks through source and target documents as long as their structure is identical.

@@ -34,24 +34,60 @@ import org.codehaus.plexus.util.StringUtils;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Merges configuration from different configuration layers according to layers and merge algorithms configuration.
+ *
+ * Plugin builds hierarchical configuration into several artifacts. Number of artifacts depends on configuration and
+ * project structure.
+ */
 @Mojo(name = "merge", defaultPhase = LifecyclePhase.COMPILE)
 public class MergeMojo extends AbstractMojo {
 
+    /**
+     * Directory in which plugin will perform all its build operations and to which it will put generated artifacts.
+     */
     @Parameter(defaultValue = "${project.build.directory}")
     private File buildDir;
 
+    /**
+     * Name of directory under which the configuration layer data is located.
+     */
     @Parameter(defaultValue = "config")
     private String configDir;
 
+    /**
+     * Artifacts archive type.
+     */
     @Parameter(defaultValue = "zip")
     private String type;
 
+    /**
+     * Definition of configuration layers.
+     */
     @Parameter
     private LayerModel[] layers = new LayerModel[] {
             new LayerModel("application", false, false),
             new LayerModel("environmentTypes", false, true),
             new LayerModel("environments", false, true),
             new LayerModel("instances", false, true)
+        };
+
+    /**
+     * Ordered list of data processors available to manage different types of files.<br/>
+     */
+    @Parameter
+    private DataProcessorModel[] processors = {
+
+        };
+
+    /**
+     * Ordered list of data merge algorithms.<br/>
+     *
+     * The first applicable algorithm from list will be used to merge data in files.
+     */
+    @Parameter
+    private MergeAlgorithmModel[] dataAlgorithms = {
+
         };
 
     /**
@@ -64,10 +100,19 @@ public class MergeMojo extends AbstractMojo {
             new MergeAlgorithmModel(PropertiesFileMergeAlgorithm.class.getName(), null)
         };
 
+    /**
+     * Ordered list of tree merge algorithms to use.<br/>
+     *
+     * First one which is able to merge given directories will be used.
+     */
     @Parameter
     private MergeAlgorithmModel[] treeAlgorithms = {
             new MergeAlgorithmModel(RecursiveTreeMergeAlgorithm.class.getName(), null)
         };
+
+    private List<DataProcessor> dataProcessors;
+
+    private List<DataMergeAlgorithm> dataMergeAlgorithms;
 
     private List<FileMergeAlgorithm> fileMergeAlgorithms;
 
@@ -93,6 +138,7 @@ public class MergeMojo extends AbstractMojo {
     }
 
     private void prepare() throws MojoFailureException {
+        instantiateProcessors();
         instantiateMergeAlgorithms();
         validateProvidedConfigurationLayers();
     }
@@ -105,7 +151,20 @@ public class MergeMojo extends AbstractMojo {
         }
     }
 
+    private void instantiateProcessors() throws MojoFailureException {
+        dataProcessors = new ArrayList<>();
+        for (DataProcessorModel dataProcessorModel : processors) {
+            try {
+                DataProcessor dataProcessor = (DataProcessor) Class.forName(dataProcessorModel.getImplementation()).newInstance();
+                dataProcessors.add(dataProcessor);
+            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                throw new MojoFailureException("Provided data processor could not be instantiated", e);
+            }
+        }
+    }
+
     private void instantiateMergeAlgorithms() throws MojoFailureException {
+        dataMergeAlgorithms = instantiateGenericMergeAlgorithms(dataAlgorithms);
         fileMergeAlgorithms = instantiateGenericMergeAlgorithms(fileAlgorithms);
         treeMergeAlgorithms = instantiateGenericMergeAlgorithms(treeAlgorithms);
     }
@@ -215,7 +274,11 @@ public class MergeMojo extends AbstractMojo {
     private void mergeTrees(List<File> sourceDirectories, File targetBaseDir) throws IOException, MergeException {
         for (File sourceBaseDir : sourceDirectories) {
             if (sourceBaseDir.isDirectory()) {
-                new TreeMergeContext(sourceBaseDir, targetBaseDir, fileMergeAlgorithms, treeMergeAlgorithms, getLog()).merge();
+                new TreeMergeContext(
+                        sourceBaseDir, targetBaseDir,
+                        treeMergeAlgorithms, fileMergeAlgorithms, dataMergeAlgorithms, dataProcessors,
+                        getLog()
+                    ).merge();
             }
         }
     }

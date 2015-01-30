@@ -1,0 +1,53 @@
+Tree merge algorithms
+
+* CopyTreeMergeAlgorithm
+
+** Work condition
+
+  Each of the following statements must be true:
+
+  * Source directory exists
+
+  * Target directory does not exist
+
+  * Current location conforms regular expression filters
+
+** Description
+
+  Copies source directory to the target directory parent.
+
+* RecursiveTreeMergeAlgorithm
+
+** Work condition
+
+  Each of the following statements must be true:
+
+  * Source directory exists
+
+  * Target directory exists
+
+  * Current location conforms regular expression filters
+
+** Description
+
+  Walks through source directory:
+
+  * If it meets directory, then it merges it using appropriate algorithm.
+
+  * If it meets file, then it proceeds to merge it using appropriate file merge algorithm
+
+* ReplaceTreeMergeAlgorithm
+
+** Work condition
+
+  Each of the following statements must by true:
+
+  * Source directory exists
+
+  * Target directory exists
+
+  * Current location conforms regular expression filters
+
+** Description
+
+  Replaces target directory with source directory.

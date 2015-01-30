@@ -14,7 +14,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.griddynamics.maven.plugins</groupId>
@@ -36,7 +37,15 @@
         <name>Grid Dynamics International, Inc.</name>
         <url>http://www.griddynamics.com</url>
     </organization>
-
+    <developers>
+        <developer>
+            <name>Alexander Betaev</name>
+            <email>abetaev@griddynamics.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/griddynamics/cm-maven-plugin/issues</url>
@@ -112,7 +121,21 @@
                     <source>1.7</source>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.4</version>
+            </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.2</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>

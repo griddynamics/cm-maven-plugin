@@ -1,0 +1,60 @@
+Best practices
+
+* Decide your configuration model appropriately
+
+** Static and dynamic environments
+
+  There are generally two types of environments:
+
+  * <<Static>>. Configuration of such environments do not change often
+
+  * <<Dynamic>>. Configuration of such environments depend on environment pool manager which has provided this
+
+  []
+
+  There may also be some hybrid types of environments which contain static properties as long as dynamic ones.
+
+  You should clearly understand which type(s) of environments are you going to configure.
+
+** Placeholders
+
+  Use placeholders on higher configuration levels:
+
+  * In merged configuration of <static> environment if you notice placeholder, it means that something is not configured
+
+  * Placeholders in configurations of <dynamic> environments may be used to specify parameters provided by environment
+  pool manager (IP addresses, ports, etc...)
+
+** Layers
+
+  Each layer depicts configuration specific for the desired level.
+  Choosing number of layers and appropriate names for them helps understanding configuration.
+
+  Layer may specify anything which would bring convenience in configuration management and reduce code (text) repetition.
+
+* Don't create new merge algorithms as long as you may just reorganize configuration
+
+  If you are able to cope with configuration running already existing merge algorithms, you should not create new ones.
+
+  For example, Apache HTTPD configuration is complex. But it may be split onto several files, so you won't need to write
+  data processor for Apache HTTP configuration, but override required parts using separate files.
+
+* One merge algorithm may be used several times in chain
+
+  Amount of algorithms in chain is not limited. You may use one algorithm configured in several ways as much times as
+  you required.
+
+* Configuration per application
+
+  Don't try to put configuration of more than one application into one configuration project.
+
+  Generally applications have orthogonal scope of roles. This will bring a lot of headache managing such configurations.
+  In order to use some common configuration you may setup configuration plugin in parent pom and inherit it.
+
+  For example if you have Tomcat and an application which runs on it, it would generally be the best way to have two
+  configuration projects for your application and for Tomcat.
+  The application's configuration will contain all the information required for application to function on the specific
+  environment (e.g. resources names). Tomcat's configuration in this case will contain information about resources,
+  passwords to connect to database, etc... So you will probably will need to have only one or two configuration for an
+  application (to function in production and in development mode), and several configurations for Tomcat to be able to
+  access resources on different environments.
